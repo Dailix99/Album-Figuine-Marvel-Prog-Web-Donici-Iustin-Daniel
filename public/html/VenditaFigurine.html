@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta e Responsive -->
+    <meta charset="UTF-8">
+  
+    <link
+        rel="icon"
+        href="../images/logo.png"
+        type="image/png"
+    >
+    <title>Vendita Figurine</title>
+
+    <!-- Stile CSS specifico per la vendita di figurine -->
+    <link
+        rel="stylesheet"
+        href="../css/venditafigurine.css"
+    >
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet"
+    >
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="menu"></div>
+
+    <div class="container">
+        <h1 class="page-title"><br>Vendita Figurine</h1>
+
+        <div class="intro">
+            <p>Metti in vendita qui le carte di cui hai più di un esemplare.</p>
+            <p>Ogni carta ti frutta <strong>0,2 crediti</strong>.</p>
+            <p>Eventuali scambi già proposti per una carta messa in vendita verranno annullati automaticamente.</p>
+        </div>
+
+        <div id="lock">
+            <p id="error_Message"></p>
+            <i class="fas fa-lock fa-2x"></i>
+        </div>
+
+        <div
+            id="pacchetto_figurine"
+            class="pacchetto_figurine"
+        ></div>
+    </div>
+
+    <!-- Scripts -->
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+    ></script>
+    <script src="../scripts/marvel.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/login.js"></script>
+
+    <script>
+        /**
+         * Gestisce il blocco: reindirizza se non c'è un album selezionato.
+         */
+        async function gestisciBlocco() {
+            if (!localStorage.getItem('album_ID')) {
+                window.location.href = '/album';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aggiorna i crediti a schermo 
+            stampaCrediti();
+            // Controlla il blocco/sblocco del flusso di vendita
+            gestisciBlocco();
+
+            // Mostra le carte duplicate dell'album selezionato
+            const albumId = localStorage.getItem('album_ID');
+            StampaDoppioniFigurine(albumId); 
+        });
+    </script>
+</body>
+</html>

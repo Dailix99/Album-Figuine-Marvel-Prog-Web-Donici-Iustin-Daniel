@@ -1,0 +1,95 @@
+  :root {
+            --marvel-red: #ED1D24;
+            --marvel-black: #1C1C1C;
+            --marvel-grey: #2A2A2A;
+            --text-light: #F1F1F1;
+            --warning-red: #FF4C4C;
+        }
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--marvel-black) url('../images/marvel-bg.jpg') no-repeat center/cover;
+            color: var(--text-light);
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+        .container {
+            flex:1;
+            max-width:700px;
+            margin:2rem auto;
+            background:rgba(0,0,0,0.7);
+            border-radius:12px;
+            padding:2rem;
+            box-shadow:0 0 20px rgba(0,0,0,0.8);
+        }
+        h1.page-title {
+            font-family:'Anton', sans-serif;
+            font-size:2.5rem;
+            color:var(--marvel-red);
+            text-align:center;
+            margin-bottom:1rem;
+            text-shadow:2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .intro p {
+            font-size:1rem;
+            line-height:1.5;
+            margin-bottom:1rem;
+        }
+        .intro .warning {
+            color:var(--warning-red);
+            font-weight:500;
+        }
+        form .form-group {
+            display:flex;
+            align-items:center;
+            margin-bottom:1.5rem;
+        }
+        form .form-group label {
+            width:25%;
+            text-align:left;
+            font-weight:500;
+        }
+        form .form-group input,
+        form .form-group .dropdown-menu {
+            width:75%;
+            background:var(--marvel-grey);
+            border:2px solid var(--marvel-red);
+            border-radius:6px;
+            color:var(--text-light);
+            padding:0.75rem 1rem;
+        }
+        form .form-group input:focus {
+            outline:none;
+            border-color:var(--text-light);
+            box-shadow:0 0 8px rgba(237,29,36,0.8);
+        }
+        .btn {
+            font-family:'Anton', sans-serif;
+            font-size:1rem;
+            padding:0.6rem 1.2rem;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            transition:transform 0.2s, box-shadow 0.2s;
+            margin-right:1rem;
+        }
+        .btn-save {
+            background:var(--marvel-red);
+            color:var(--text-light);
+        }
+        .btn-delete {
+            background:var(--warning-red);
+            color:var(--text-light);
+        }
+        .btn:hover {
+            transform:translateY(-2px);
+            box-shadow:0 4px 12px rgba(237,29,36,0.6);
+        }
+        footer {
+            text-align:center;
+            padding:1rem;
+            background:var(--marvel-black);
+            border-top:1px solid var(--marvel-red);
+            font-size:0.9rem;
+        }

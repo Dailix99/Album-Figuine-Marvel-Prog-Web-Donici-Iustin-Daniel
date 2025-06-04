@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta tag per charset e responsive design -->
+    <meta charset="UTF-8">
+
+
+    <!-- Stile personalizzato per l'interfaccia -->
+    <link rel="stylesheet" href="../css/pacchetto.css">
+
+    <title>Apri Pacchetto</title>
+
+    <!-- Google Fonts per tipografia personalizzata -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+   
+</head>
+<body>
+    <!-- Navbar importata dinamicamente -->
+    <div id="menu"></div>
+
+    <div class="container">
+        <!-- Intestazione della sezione -->
+        <header>
+            <h1><br>Apri un pacchetto di figurine</h1>
+        </header>
+
+        <!-- Informazioni sul pacchetto e crediti disponibili -->
+        <div class="info">
+            <p>In questo pacchetto riceverai 5 figurine, costo: 1 credito.</p>
+            <p>Crediti disponibili: <span id="current_credits" class="current_credits"></span></p>
+        </div>
+
+        <!-- Contenitore centrato per il pulsante di apertura e stato di blocco -->
+        <div class="button-container">
+            <!-- Bottone per aprire il pacchetto con stile Marvel -->
+            <button id="cardPack">Apri Pacchetto</button>
+            <!-- Messaggio di errore e icona di blocco -->
+            <div id="lock" class="text-center ms-3">
+                <p id="error_Message" class="text-danger"></p>
+                <i class="fas fa-lock fa-2x" style="color: #e62429;"></i>
+            </div>
+        </div>
+
+        <!-- Griglia nascosta dove verranno mostrate le figurine estratte -->
+        <div id="pacchetto_figurine" class="pacchetto_figurine" style="display:none;"></div>
+    </div>
+
+    <!-- Librerie esterne caricamento jQuery e Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <!-- Script applicativi per funzionalità Marvel, navbar, login e footer -->
+    <script src="../scripts/marvel.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/login.js"></script>
+    
+
+   <script>
+    /**
+     * Abilita o disabilita il bottone in base
+     * all'esistenza di un album selezionato e ai crediti
+     */
+    async function gestisciBlocco() {
+        const lockDiv = document.getElementById('lock');
+        const btn = document.getElementById('cardPack');
+        // Recupera i crediti attuali da API o localStorage
+        const credits = await AcquistaCrediti();
+        // Se non c'è un album selezionato o crediti insufficienti
+        if (!localStorage.getItem('album_ID') || credits < 1) {
+            btn.disabled = true;
+            // Messaggio personalizzato in base al problema
+            lockDiv.querySelector('#error_Message').textContent =
+              !localStorage.getItem('album_ID')
+                ? 'Seleziona prima un album'
+                : 'Crediti insufficienti';
+            lockDiv.classList.add('active'); // Mostra il div di blocco
+        } else {
+            btn.disabled = false;
+            lockDiv.classList.remove('active'); // Nasconde il div di blocco
+        }
+    }
+
+    /**
+     * Gestisce il click sul pulsante di apertura pacchetto:
+     * disabilita il bottone, anima, stampa le carte
+     */
+    document.getElementById('cardPack').addEventListener('click', async function() {
+        const btn = this;
+        btn.disabled = true;              // Disabilita clic ripetuti
+        btn.classList.add('shake');       // Aggiunge animazione di shake
+        await stampaPacchetto();             // Mostra le figurine estratte
+        btn.classList.remove('shake');    // Rimuove animazione
+        btn.style.display = 'none';       // Nasconde il bottone
+        document.getElementById('pack_cards').style.display = 'grid'; // Mostra le carte
+        stampaCrediti();                   // Aggiorna visualizzazione crediti
+        btn.disabled = false;             // Riabilita bottone (nel caso serva)
+    });
+
+    /**
+     * Inizializzazione al caricamento della pagina:
+     * imposta crediti iniziali e stato del blocco
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        // Mostra i crediti salvati (o 0 se assenti)
+        document.getElementById('current_credits').textContent =
+          localStorage.getItem('credits') ;
+        gestisciBlocco(); // Controlla e aggiorna lo stato del bottone
+    });
+</script>
+
+
+</body>
+</html>

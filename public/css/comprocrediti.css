@@ -1,0 +1,99 @@
+ :root {
+            --marvel-red: #ED1D24;
+            --marvel-black: #1C1C1C;
+            --marvel-grey: #2A2A2A;
+            --text-light: #F1F1F1;
+        }
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--marvel-black) url('../images/marvel-bg.jpg') no-repeat center/cover;
+            color: var(--text-light);
+            min-height:100vh;
+            display:flex; flex-direction:column;
+        }
+        header h1 {
+            font-family: 'Anton', sans-serif;
+            font-size:2.5rem;
+            color: var(--marvel-red);
+            text-align:center;
+            margin:1rem 0;
+            text-shadow:2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .container {
+            flex:1;
+            max-width:800px;
+            margin: auto;
+            background:rgba(0,0,0,0.6);
+            border-radius:12px;
+            padding:2rem;
+            box-shadow:0 0 20px rgba(0,0,0,0.8);
+        }
+        .info {
+            text-align:center;
+            margin-bottom:2rem;
+        }
+        .info p { margin:0.5rem 0; font-size:1.1rem; }
+        .credits-display {
+            font-size:1.5rem;
+            color: var(--marvel-red);
+            font-weight:500;
+        }
+        .options {
+            display:grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+            gap:1rem;
+            margin-bottom:2rem;
+        }
+        .options button {
+            background: var(--marvel-grey);
+            border:2px solid var(--marvel-red);
+            border-radius:8px;
+            color: var(--text-light);
+            padding:1rem;
+            font-size:1rem;
+            font-weight:500;
+            cursor:pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .options button.selected,
+        .options button:hover {
+            background: var(--marvel-red);
+            box-shadow:0 4px 12px rgba(237,29,36,0.6);
+            transform: translateY(-2px);
+        }
+        #buy {
+            display:block;
+            margin: auto;
+            background: var(--marvel-red);
+            border:none;
+            color: var(--text-light);
+            font-size:1.2rem;
+            font-family: 'Anton', sans-serif;
+            padding:0.8rem 2rem;
+            border-radius:8px;
+            cursor:pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        #buy:disabled {
+            background: var(--marvel-grey);
+            cursor:not-allowed;
+            box-shadow:none;
+        }
+        .payment-icons {
+            text-align:center;
+            margin-top:2rem;
+        }
+        .payment-icons i {
+            margin:0 1rem;
+            font-size:2rem;
+            transition: color 0.2s;
+        }
+        .payment-icons i:hover { color: var(--marvel-red); }
+        footer {
+            text-align:center;
+            padding:1rem;
+            background: var(--marvel-black);
+            border-top:1px solid var(--marvel-red);
+            font-size:0.9rem;
+        }

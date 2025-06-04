@@ -1,0 +1,82 @@
+  :root {
+            --marvel-red: #ED1D24;
+            --marvel-black: #1C1C1C;
+            --marvel-grey: #2A2A2A;
+            --text-light: #F1F1F1;
+        }
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--marvel-black) url('../images/marvel-bg.jpg') no-repeat center/cover;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex:1;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: rgba(0,0,0,0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        h1.page-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: var(--marvel-red);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .intro p strong {
+            color: var(--marvel-red);
+        }
+        #lock {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--marvel-red);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-light);
+            display: none;
+            margin-bottom: 1rem;
+        }
+        #lock.active { display: block; }
+        .pack_cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+            gap: 1rem;
+        }
+        .pack_cards .card-item {
+            background: var(--marvel-grey);
+            border: 2px solid var(--marvel-red);
+            border-radius: 8px;
+            text-align: center;
+            padding: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .pack_cards .card-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(237,29,36,0.5);
+        }
+        .card-item img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid var(--marvel-red);
+            margin-bottom: 0.5rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: var(--marvel-black);
+            border-top: 1px solid var(--marvel-red);
+            font-size: 0.9rem;
+        }

@@ -1,0 +1,53 @@
+ /* Titolo in stile Marvel */
+      .register-title {
+        font-family: 'Bangers', cursive;
+        font-size: 6rem;
+        -webkit-text-fill-color: rgb(237,29,36);
+        text-transform: uppercase;
+        text-align: left;
+        margin: 6rem 0 0 14rem;
+      }
+
+      /* Posizionamento del form a destra, leggermente a sinistra rispetto a prima */
+      .form-container {
+        position: absolute;
+        top: 50%;
+        right: 10%; /* spostato da 5% a 10% per avvicinare il form al centro */
+        transform: translateY(-50%);
+        width: 580px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2rem;
+        border-radius: 1rem;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      }
+
+      .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.15rem;
+      }
+
+      .register-form .form-control {
+        background: #222;
+        color: #fff;
+        border-color: rgba(237,29,36,0.6) !important;
+        box-shadow: none !important;
+      }
+
+      .register-form .form-control:focus {
+        border-color: rgba(237,29,36,1) !important;
+        box-shadow:
+          0 0 8px rgba(237,29,36,0.6),
+          0 0 16px rgba(237,29,36,0.3) !important;
+        outline: none;
+      }
+
+      .register-form .form-floating > label {
+        color: #ccc;
+        font-weight: 600;
+      }
+
+      .helper-text, .text-gray {
+        color: #bbb;
+      }

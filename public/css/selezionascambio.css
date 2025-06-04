@@ -1,0 +1,177 @@
+  :root {
+            --marvel-red: #ED1D24;
+            --marvel-black: #1C1C1C;
+            --marvel-grey: #2A2A2A;
+            --text-light: #F1F1F1;
+            --text-muted-light: #C0C0C0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--marvel-black) url('../images/marvel-bg.jpg') no-repeat center/cover;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            background: rgba(0,0,0,0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+        }
+        h1.page-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: var(--marvel-red);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .button-group .btn {
+            font-family: 'Anton', sans-serif;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, var(--marvel-red), #B22222);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(237,29,36,0.6);
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .button-group .btn:hover { transform: translateY(-2px); }
+        #lockOverlay, #overlay2 {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+            color: var(--text-light);
+        }
+        #lockOverlay.active, #overlay2.active { display: flex; }
+        #lockOverlay p, #overlay2 p { color: var(--text-light); margin-bottom: 1rem; }
+        .report-section { margin-top: 1.5rem; flex: 1; }
+        .report-section h2 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            color: var(--marvel-red);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        .pack_cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+            gap: 1rem;
+        }
+        .form-floating { margin-top: 1.5rem; width: 100%; }
+        .form-floating .form-control {
+            background: var(--marvel-grey);
+            border: 2px solid var(--marvel-red);
+            color: var(--text-light);
+            padding: 0.75rem 1rem;
+        }
+        .form-floating .form-control:focus {
+            border-color: var(--text-light);
+            box-shadow: 0 0 8px rgba(237,29,36,0.8);
+        }
+        #recieveCard { display: none; }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: var(--marvel-black);
+            border-top: 1px solid var(--marvel-red);
+            font-size: 0.9rem;
+        }
+
+
+        body {
+        background: linear-gradient(135deg, #1f2a44 0%, #3e5c76 100%);
+        color: #f8f9fa;
+        font-family: 'Roboto', sans-serif;
+      }
+      h1.page-title {
+        font-family: 'Anton', sans-serif;
+        color: #fff;
+        text-shadow: 2px 2px 4px #000;
+      }
+      .report-section h2 {
+        color: #fff;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+        padding-bottom: 0.5rem;
+      }
+      /* Card wrapper per le sezioni */
+      .exchange-card {
+        background: rgba(255,255,255,0.05);
+        border: none;
+        border-radius: .5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        margin-bottom: 3rem;
+      }
+      .exchange-card .card-header {
+        font-size: 1.25rem;
+        font-weight: 500;
+      }
+      .exchange-card .card-body {
+        background: rgba(0,0,0,0.3);
+        padding: 1.5rem;
+      }
+      /* Spaziatura tra colonne */
+      .exchange-card table th,
+      .exchange-card table td {
+        padding: 0.75rem 1.5rem;
+      }
+      /* Table styling */
+      .exchange-card table {
+        backdrop-filter: blur(8px);
+      }
+      .exchange-card thead th {
+        background-color: #0d6efd;
+        color: #fff;
+        border: 0;
+      }
+      .exchange-card tbody tr:hover {
+        background-color: rgba(255,255,255,0.1);
+      }
+      /* Button styles */
+      .btn-accept {
+        background-color: #28a745;
+        border: none;
+      }
+      .btn-accept:hover {
+        background-color: #218838;
+      }
+      .btn-delete {
+        background-color: #dc3545;
+        border: none;
+      }
+      .btn-delete:hover {
+        background-color: #c82333;
+      }

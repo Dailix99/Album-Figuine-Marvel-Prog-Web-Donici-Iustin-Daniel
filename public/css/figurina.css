@@ -1,0 +1,329 @@
+:root {
+    --card-width: 300px;
+}
+.card_album{
+    display: grid;
+    grid-template-columns: repeat(3, var(--card-width));
+    gap: 20px;
+    max-width: calc(var(--card-width) * 3 + 40px);
+    margin: 0 auto;
+}
+.card {
+    background-color: var(--bs-red);
+    border: 10px solid var(--bs-black);
+    border-radius: 15px;
+    width: 33%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    min-width: 200px;
+    padding: 10px;
+    margin: 2px;
+}
+
+@media screen and (min-width: 780px) {
+    .card {
+        width: 33%;
+     }
+}
+
+
+    /* ========== NAVBAR: logo allineato a destra ========== */
+    #NavigationBar {
+      display: flex;            /* flex container */
+      align-items: center;      /* verticalmente centrato */
+    }
+    
+    /* ridimensiona e leggermente rialza il logo, se ti serve */
+    #NavigationBar .nav-logo {
+    
+      position: relative;
+      top: 4px;
+    }
+
+
+@media screen and (max-width: 780px) {
+    .card {
+        width: 100%;
+    }
+}
+
+.card-header {
+    min-height: 75px;
+    text-align: center;
+    font-size: 125%;
+    font-weight: bold;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.card-content {
+    width: 100%;
+    height: 260px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border : 1px solid black
+}
+.card-body::-webkit-scrollbar {
+
+    width: 3px;
+  }
+  .card-body::-webkit-scrollbar-thumb {
+    background: red; 
+  }
+
+  .card-body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+.card-content img {
+    width: 100%;
+    height: 260px;
+
+}
+
+.card-body {
+    font-size: 14px;
+    text-align: center;
+    overflow-y: auto;
+}
+.card-footer
+{
+    font-size :8px;
+    text-align: right;
+}
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        border: 10px solid var(--bs-white);
+        color : var(--bs-white)
+
+    }
+}
+
+.card-shine-effect-metal {
+--shine-deg: 45deg;
+position: relative;
+overflow: hidden;
+border-radius: 0.875rem;
+}
+
+.card-shine-effect-metal:after {
+content: "";
+top: 0;
+transform: translateX(100%) rotate(var(--shine-deg));
+width: 300%;
+height: 300%;
+position: absolute;
+z-index: 1;
+background: linear-gradient(
+30deg,
+transparent 20%,
+transparent 40%,
+rgb(255, 255, 255, 0.4) 50%,
+rgb(255, 255, 255, 0.4) 55%,
+transparent 70%,
+transparent 100%
+);
+transition: transform 2s ease-in;
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+
+.card-shine-effect-metal:hover:after {
+animation: shine 1s 1 ease-in;
+}
+
+@-webkit-keyframes shine {
+0% {
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+100% {
+transform: translateX(-100%) rotate(var(--shine-deg));
+}
+}
+.card-pack{
+    background-color: #BC0000;
+    background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.7)), url('');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 50vh;
+    border: 3px solid gold;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1;
+}
+
+.shake {
+    animation: shake 1s ;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.button-container {
+    position: relative; 
+}
+
+#lock.active {
+    display: none; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 2; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#lock {
+    display: block; 
+}
+
+.register-title {
+    font-family: 'Bangers', cursive;  /* font in stile “comic/Marvel” */
+    font-size: 4rem;                  /* più grande */
+    text-align: left;                 /* allineato a sinistra */
+    margin: 9.5rem 0 1.5rem 2rem; /* 2.5rem sopra, 1.5rem sotto, 2rem da sinistra */
+    color: rgb(173, 23, 23)
+}
+
+:root {
+    --hero-red:    #ED1D24;
+    --hero-yellow: #FFCC00;
+    --hero-blue:   #005DAA;
+    --text-light:  #ffffff;
+  }
+  
+  /* 1) Contenitore quadrato in alto a destra */
+  .search-container {
+    position: absolute;
+    top: 2rem;               /* distanza dal top */
+    right: 1rem;             /* distanza dal lato destro */
+    width: 240px;            /* larghezza fissa */
+    height: 240px;           /* stessa altezza per renderlo quadrato */
+    background: rgba(0,0,0,0.8);
+    padding: 1rem;
+    border-radius: 0.5rem;   /* angoli leggermente arrotondati */
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  /* 2) Titolo stile Marvel all’interno */
+  .search-container .register-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    margin: 0;
+    background: linear-gradient(135deg,
+       var(--hero-red) 0%, 
+       var(--hero-yellow) 50%, 
+       var(--hero-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    text-align: center;
+  }
+  
+
+  :root {
+    --hero-red:    #ED1D24;
+    --hero-yellow: #FFCC00;
+    --hero-blue:   #005DAA;
+    --text-light:  #ffffff;
+  }
+  
+  /* 1) Centra il form esattamente nella viewport */
+  .search-container {
+    position: absolute;
+    top: 19%;
+    left: 74%;
+    transform: translate(-50%, -50%);
+    width: 860px;               /* aumenta a piacere */
+    background: rgba(0, 0, 0, 0.85);
+    padding: 2rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+  
+  /* 2) Titolo più grande */
+  .search-container .register-title {
+    font-family: 'Bangers', cursive;
+    font-size: 3.5rem;         /* più grande */
+    line-height: 1.1;
+    margin: 0;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg,
+      var(--hero-red) 0%,
+      var(--hero-yellow) 50%,
+      var(--hero-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    text-align: center;
+  }
+  
+  /* 3) Input più grande e leggibile */
+  .search-container .form-control {
+    font-size: 1.2rem;          /* testo più grande */
+    padding: 0.75rem;           /* campo più alto */
+    background: #111;
+    color: var(--text-light);
+    border: 2px solid var(--hero-yellow);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  /* 4) Label adeguate */
+  .search-container label {
+    color: #ccc;
+    font-size: 1rem;
+    padding-left: 0.25rem;
+  }
+  
+  /* 5) Focus rosso sempre evidente */
+  .search-container .form-control:focus {
+    border-color: var(--hero-red);
+    box-shadow:
+      0 0 8px rgba(237,29,36,0.6),
+      0 0 16px rgba(237,29,36,0.3);
+    outline: none;
+  }
+  
+
+  #menu .container-fluid {
+  display: flex;              /* assicurati di essere in flex */
+  justify-content: flex-end;  /* allinea a destra */
+}
+#menu .navbar-brand {
+  margin-right: 19rem;         /* spaziatura dal bordo */
+}

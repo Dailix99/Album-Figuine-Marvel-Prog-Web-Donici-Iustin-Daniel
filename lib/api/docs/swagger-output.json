@@ -1,0 +1,777 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Personaggi Marvel",
+    "description": "Imposto API per il sistema di scambio figurine marvel",
+    "version": "1.0.0"
+  },
+  "host": "localhost:999",
+  "basePath": "/",
+  "tags": [
+  
+    {
+      "name": "utenti",
+      "description": "Gestione operazioni relative agli utenti"
+    },
+    {
+      "name": "aute",
+      "description": "Operazioni di login e autorizzazione"
+    },
+    {
+      "name": "fig",
+      "description": "Gestione delle figurine dell'album"
+    },
+    {
+      "name": "scambi",
+      "description": "Gestione degli scambi di figurine"
+    },
+    {
+      "name": "db",
+      "description": "Controllo stato connessione al database"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "generale"
+        ],
+        "description": "Endpoint che consente di ottenere la pagina index.html",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/package": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per ottenere un pacchetto di personaggi",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/card": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina di dettaglio della figurina",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina di gestione utente",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina modale di login",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "autenticazione"
+        ],
+        "description": "Endpoint che consente di verificare l'utente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Corpo per convalidare il login.",
+            "schema": {
+              "$ref": "#/definitions/loginrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "I dati di login dell'utente sono validi",
+            "schema": {
+              "$ref": "#/definitions/loggeduser"
+            }
+          },
+          "400": {
+            "description": "Dati non validi, parametro mancante"
+          },
+          "401": {
+            "description": "Utente non autorizzato"
+          },
+          "500": {
+            "description": "Errore interno"
+          }
+        }
+      }
+    },
+    "/register": {
+      "get": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina di registrazione utente",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "autenticazione"
+        ],
+        "description": "Endpoint che consente di registrare un nuovo utente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Corpo da registrare nel DB.",
+            "schema": {
+              "$ref": "#/definitions/registerrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registrazione avvenuta con successo."
+          },
+          "400": {
+            "description": "Utente già esistente, parametro non valido"
+          },
+          "500": {
+            "description": "Errore generico"
+          }
+        }
+      }
+    },
+    "/album": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina dell'album",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/sell_cards": {
+      "get": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina per vendere figurine",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/albums/{userid}": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint che consente di recuperare gli album dell'utente",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Errore interno del server"
+          }
+        }
+      }
+    },
+    "/albums_cards/{albumid}": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint che consente di recuperare le figurine nell'album",
+        "parameters": [
+          {
+            "name": "albumid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Errore interno del server"
+          }
+        }
+      }
+    },
+    "/albums_duplicated_cards/{albumid}": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint che consente di recuperare le figurine duplicate dell'album",
+        "parameters": [
+          {
+            "name": "albumid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Errore interno del server"
+          }
+        }
+      }
+    },
+    "/create_exchange": {
+      "get": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina di creazione scambio",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint per creare uno scambio",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/exchange": {
+      "get": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina di scambio",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get-credits": {
+      "get": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint che consente di recuperare la pagina per acquistare crediti",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/print-credits/{username}": {
+      "get": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint per ottenere i crediti dell'utente",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/accept_exchange": {
+      "post": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint per accettare uno scambio",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_card_album": {
+      "post": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per verificare se una figurina è in un album",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_exchanges": {
+      "post": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint per ottenere la lista degli scambi",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_my_exchanges": {
+      "post": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint per ottenere la lista dei miei scambi",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/character/{id}": {
+      "get": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per recuperare un personaggio specifico dall'API Marvel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Errore interno del server"
+          }
+        }
+      }
+    },
+    "/create_album": {
+      "post": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per creare un album",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/edit-credits": {
+      "post": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint per modificare i crediti",
+        "parameters": [
+          {
+            "name": "headers",
+            "in": "headers",
+            "description": "Header contenenti informazioni sulla variazione dei crediti",
+            "type": "object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "credits": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "operation": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Crediti aggiornati con successo"
+          },
+          "400": {
+            "description": "Parametri non validi o crediti insufficienti"
+          },
+          "500": {
+            "description": "Errore interno del server"
+          }
+        }
+      }
+    },
+    "/check-db": {
+      "post": {
+        "tags": [
+          "database"
+        ],
+        "description": "Endpoint per verificare la connessione al database",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/characters": {
+      "post": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per recuperare personaggi dall'API Marvel con una query personalizzata",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_user_data": {
+      "post": {
+        "tags": [
+          "autenticazione"
+        ],
+        "description": "Endpoint che consente di verificare se la tupla utente (_id, email e nickname) è valida nel database.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Tupla utilizzata per la verifica",
+            "schema": {
+              "$ref": "#/definitions/authuser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Autorizzazione avvenuta con successo.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "400": {
+            "description": "Richiesta non valida"
+          },
+          "401": {
+            "description": "Parametro body non valido"
+          },
+          "500": {
+            "description": "Errore interno"
+          }
+        }
+      }
+    },
+    "/update-user": {
+      "put": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint per modificare un utente.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete-user/{userid}": {
+      "delete": {
+        "tags": [
+          "utenti"
+        ],
+        "description": "Endpoint per eliminare un utente",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete-exchange/{exchangeid}": {
+      "delete": {
+        "tags": [
+          "scambi"
+        ],
+        "description": "Endpoint per eliminare uno scambio",
+        "parameters": [
+          {
+            "name": "exchangeid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/sell_card/": {
+      "delete": {
+        "tags": [
+          "figurine"
+        ],
+        "description": "Endpoint per vendere una figurina",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        },
+        "name": {
+          "type": "string",
+          "example": "John"
+        },
+        "username": {
+          "type": "string",
+          "example": "Jhonny"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "jhonny@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "hashed_password"
+        },
+        "credits": {
+          "type": "number",
+          "example": 100
+        },
+        "cards": {
+          "type": "array",
+          "example": [
+            "card_id1",
+            "card_id2"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "loggeduser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "username": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John"
+        }
+      },
+      "required": [
+        "_id",
+        "username",
+        "email",
+        "name"
+      ]
+    },
+    "loginrequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        },
+        "username": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "password"
+      ]
+    },
+    "registerrequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Mario"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Rossi"
+        },
+        "username": {
+          "type": "string",
+          "example": "mariorossi"
+        },
+        "email": {
+          "type": "string",
+          "example": "mario.rossi@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password123"
+        }
+      },
+      "required": [
+        "name",
+        "surname",
+        "username",
+        "email",
+        "password"
+      ]
+    },
+    "authuser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "email": {
+          "type": "string",
+          "example": "utente@example.com"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "nomeutente"
+        }
+      },
+      "required": [
+        "_id",
+        "email",
+        "nickname"
+      ]
+    }
+  }
+}

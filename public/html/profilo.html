@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta e Responsive: charset UTF-8 e viewport per rendere la pagina responsive -->
+    <meta charset="UTF-8">
+  
+
+    <!-- Icona del sito (favicon) -->
+    <link rel="icon" href="../images/logo.png" type="image/png">
+
+    <!-- Titolo della pagina mostrato nella scheda del browser -->
+    <title>Profilo utente</title>
+
+    <!-- Import dei font da Google Fonts: Anton per i titoli e Roboto per il testo -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Stile personalizzato per la pagina di eliminazione/profilo utente -->
+    <link rel="stylesheet" href="../css/eliminazioneprofilo.css">
+</head>
+<body>
+    <!-- Navbar caricata dinamicamente tramite script esterno -->
+    <div id="menu"></div>
+
+    <!-- Contenuto principale della pagina -->
+    <main class="container">
+        <!-- Titolo principale della pagina -->
+        <h1 class="page-title">Profilo utente</h1>
+
+        <!-- Sezione introduttiva con avvisi all'utente -->
+        <section class="intro">
+            <p>Gestisci i tuoi dati qui. Puoi anche eliminare il tuo account.</p>
+            <!-- Messaggio di avvertimento evidenziato -->
+            <p class="warning">L'eliminazione è irreversibile!</p>
+        </section>
+
+        <!-- Form per la modifica dei dati utente -->
+        <form>
+            <!-- Campo Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" required placeholder="nome@example.com" autocomplete="email">
+            </div>
+
+            <!-- Campo Nome utente con vincoli di lunghezza -->
+            <div class="form-group">
+                <label for="username">Nome utente</label>
+                <input id="username" type="text" minlength="6" maxlength="9" required placeholder="Nome utente">
+            </div>
+            <p style="font-size:0.8rem; color:grey; margin-left:25%; margin-top:-1rem;">
+                Il nome utente deve essere lungo 6–9 caratteri
+            </p>
+
+            <!-- Campo Nuova password con vincolo di lunghezza -->
+            <div class="form-group">
+                <label for="password1">Nuova password</label>
+                <input id="password1" type="password" minlength="9" placeholder="Password" autocomplete="new-password">
+            </div>
+
+            <!-- Campo Conferma password -->
+            <div class="form-group">
+                <label for="password2">Conferma password</label>
+                <input id="password2" type="password" minlength="9" placeholder="Ripeti password" autocomplete="new-password">
+            </div>
+            <p style="font-size:0.8rem; color:grey; margin-left:25%; margin-top:-1rem;">
+                La password deve contenere almeno 9 caratteri
+            </p>
+
+            <!-- Campo Nome -->
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input id="name" type="text" required placeholder="Nome" autocomplete="name">
+            </div>
+
+            <!-- Campo Cognome -->
+            <div class="form-group">
+                <label for="surname">Cognome</label>
+                <input id="surname" type="text" required placeholder="Cognome" autocomplete="family-name">
+            </div>
+
+            <!-- Campo Data di nascita con limite inferiore -->
+            <div class="form-group">
+                <label for="date_of_birth">Data di nascita</label>
+                <input id="date_of_birth" type="date" required min="1900-01-01" placeholder="Data di nascita" autocomplete="bday">
+            </div>
+
+            <!-- Selezione del supereroe preferito (autocomplete via script) -->
+            <div class="form-group relative">
+                <label for="select_superhero">Supereroe preferito</label>
+                <input id="select_superhero" type="text" required placeholder="Supereroe preferito" autocomplete="off">
+                <input type="hidden" id="selected_Superhero">
+            </div>
+
+            <!-- Pulsanti di azione: salva modifiche o elimina account -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-save" onclick="aggiornoUtente()">
+                    <i class="far fa-floppy-disk"></i> Salva
+                </button>
+                <button type="button" class="btn btn-delete" onclick="confermaEliminazione()">
+                    <i class="far fa-trash-can"></i> Elimina account
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Script esterni necessari -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="../scripts/marvel.js"></script>
+    <script src="../scripts/registrazione.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/login.js"></script>
+
+    <!-- Script inline: funzioni locali in italiano -->
+    <script>
+        /**
+         * Mostra una finestra di conferma prima di eliminare l'account.
+         * Se l'utente conferma, chiama deleteUser() per procedere.
+         */
+        function confermaEliminazione() {
+            if (confirm(
+                'Sei sicuro di voler eliminare il tuo account? ' +
+                'Questa operazione non può essere annullata.'
+            )) {
+                cancellaUtente();  
+            }
+        }
+
+        // Al caricamento della finestra, popola i dati utente e stampa la navbar
+        window.addEventListener('load', async () => {
+            await riempiFormUtente(); 
+            printNavBar();              
+        });
+
+        // Gestisce eventuali promesse non gestite mostrando l'errore in console
+        window.addEventListener('unhandledrejection', e =>
+            console.error('Unhandled promise rejection:', e.reason)
+        );
+    </script>
+</body>
+</html>

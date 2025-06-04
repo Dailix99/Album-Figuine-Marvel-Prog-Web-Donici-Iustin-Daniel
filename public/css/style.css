@@ -1,0 +1,232 @@
+:root {
+  --hero-red: #ED1D24;
+  --hero-blue: #005DAA;
+  --hero-yellow: #FFCC00;
+  --text-light: #ffffff;
+  --bg-gradient: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-light);
+  overflow-x: hidden;
+}
+
+nav#menu {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+nav#menu ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+nav#menu a,
+nav#menu .btn {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.btn {
+  background: var(--hero-yellow);
+  color: var(--hero-blue);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+nav#menu a:hover,
+nav#menu .btn:hover {
+  color: var(--hero-red);
+  transform: scale(1.1);
+}
+
+header#header {
+  height: 300px;
+  background: url('../images/logo.png') center/contain no-repeat;
+  margin-top: 60px; /* offset fixed navbar */
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem;
+  margin-top: 1rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--text-light);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  position: relative;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: transform 0.5s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 0 15px var(--hero-yellow);
+}
+
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+:root {
+--hero-red:    #ED1D24;
+--hero-blue:   #005DAA;
+--hero-yellow: #FFCC00;
+--text-light:  #ffffff;
+}
+
+
+header#header {
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 1rem 2rem;
+margin-top: 170px;
+height: calc(30vh - 96px);
+width: 100%;
+padding-top: 4rem;   /* crea spazio interno extra sopra il logo */
+/* sfondo da nero a rosso */
+background: linear-gradient(135deg, #000 0%, var(--hero-red) 100%);
+}
+
+
+
+/* bottoni trasparenti, bordo Marvel e testo “glow” */
+.btn {
+background: transparent;
+border: 2px solid var(--hero-yellow);
+color: var(--hero-yellow);
+font-size: 2rem;
+font-weight: 900;
+text-shadow: 
+0 0 5px var(--hero-yellow),
+0 0 10px var(--hero-red);
+animation: heroTextGlow 2s ease-in-out infinite alternate;
+text-decoration: none;
+transition: transform 0.2s ease;
+}
+
+
+/* Avvicina il box di sinistra al centro */
+.btn-container.left {
+left: 25%;  /* prima era 15% o 20%, ora 25% */
+}
+
+/* Spingi un po’ più fuori anche quello di destra (opzionale) */
+.btn-container.right {
+right: 10%; /* prima era 15% o 20%, adesso 10% */
+}
+
+/* hover: ingrandimento e glow extra */
+.btn:hover {
+transform: scale(1.05);
+text-shadow: 
+0 0 10px var(--hero-yellow),
+0 0 20px var(--hero-red);
+}
+
+/* keyframes per animazione “illuminazione” del testo */
+@keyframes heroTextGlow {
+from {
+text-shadow: 
+  0 0 3px var(--hero-yellow),
+  0 0 6px var(--hero-red);
+}
+to {
+text-shadow: 
+  0 0 12px var(--hero-yellow),
+  0 0 24px var(--hero-red);
+}
+}
+.hero-title {
+  /* Font “Bangers” per effetto fumetto, ma con peso ridotto */
+  font-family: 'Bangers', 'Arial Black', sans-serif;
+  font-size: 1.6rem;               /* ridotto per renderlo meno “spesso” */
+  font-weight: normal;             /* testo meno marcato */
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 800px;
+
+  /* Sposta l’h2 più in alto: margine superiore ridotto */
+  margin: 60px auto 20px;
+  padding: 0.5rem 1rem;
+
+  /* Colore del testo quasi bianco */
+  color: #f2f2f2;
+
+  /* Sfondo con gradiente più intenso (rosso → blu), opacità aumentata */
+  background: linear-gradient(
+    135deg,
+    rgba(237, 29, 36, 0.30) 0%,   /* rosso semi-trasparente più marcato */
+    rgba(0, 93, 170, 0.30) 100%    /* blu semi-trasparente più marcato */
+  );
+
+  /* Bordi arrotondati e ombra più leggera */
+  border-radius: 0.4rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+
+  /* Contorno scuro più sottile (per mantenere leggibilità) */
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+
+/* ------------------------------------------------
+   2) FOOTER “hero-footer” CON COLORI PIÙ TENUI
+   ------------------------------------------------ */
+.hero-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  
+  /* Sfondo leggero a mezza trasparenza, bordo superiore sfumato tenue */
+  background: rgba(20, 20, 20, 0.85);
+  border-top: 2px solid rgba(237, 29, 36, 0.2);
+  
+  /* Testo chiaro ma non troppo brillante */
+  color: #e0e0e0;
+  font-family: 'Arial Black', sans-serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.8rem 0;
+  
+  /* Leggera ombra sul testo */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+
+
+

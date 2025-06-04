@@ -1,0 +1,244 @@
+:root {
+    --marvel-red:   #ED1D24;
+    --marvel-black: #1C1C1C;
+    --marvel-grey:  #2A2A2A;
+    --text-light:   #F1F1F1;
+}
+
+/* Reset generale */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Corpo pagina: sfondo full-screen e layout a colonna */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--marvel-black);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenitore principale */
+.container {
+    flex: 1;
+    max-width: 800px;        /* larghezza massima normale */
+    margin: 2rem auto;       /* centrato orizzontalmente */
+    background: rgba(0,0,0,0.7);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* Titolo principale */
+header h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.5rem;
+    color: var(--marvel-red);
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* Paragrafi informativi */
+.info p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 0.6rem;
+}
+.info .current_credits {
+    font-weight: 500;
+    color: var(--marvel-red);
+}
+
+/* Pulsanti pacchetti */
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.options button {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.2rem;
+    background: var(--marvel-grey);
+    border: 2px solid var(--marvel-red);
+    color: var(--text-light);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1 1 120px;
+    text-align: center;
+}
+.options button.selected,
+.options button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(237,29,36,0.5);
+}
+
+/* Bottone di acquisto */
+#buy {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background: var(--marvel-red);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#buy:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: var(--marvel-black);
+    border-top: 1px solid var(--marvel-red);
+    font-size: 0.9rem;
+}
+
+/* --- Regola per orientamento orizzontale (landscape) --- */
+@media (orientation: landscape) {
+    /* Rimuove margini e max-width per usare tutta la larghezza */
+    .container {
+        max-width: none;   /* nessuna larghezza massima */
+        margin: 1rem;      /* margini ridotti solo per un po’ di respiro */
+        width: auto;       /* occupa tutta la larghezza disponibile */
+    }
+}
+
+
+#scarta {
+    display: block;                              /* blocco per centrarlo */
+    margin: 2rem auto;                           /* centratura orizzontale */
+    padding: 1.2rem 1.5rem;                      /* area tocco generosa */
+    font-family: 'Anton', sans-serif;            /* font Marvel */
+    font-size: 1.8rem;                           /* testo grande */
+    background: var(--marvel-red);               /* rosso Marvel */
+    color: var(--text-light);                    /* testo chiaro */
+    border: 3px solid var(--marvel-black);       /* bordo spesso nero */
+    border-radius: 12px;                         /* angoli arrotondati */
+    text-align: center;
+    text-transform: uppercase;                   /* maiuscole */
+    box-shadow: 0 4px 10px rgba(237,29,36,0.7);   /* ombra drammatica */
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover ed effetto “sollevato” */
+#scarta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(237,29,36,0.9);
+}
+
+
+
+  /* Stile personalizzato per il pulsante Marvel centrale */
+      #cardPack {
+        font-family: 'Anton', sans-serif;
+        font-size: 0.9rem;
+        padding: 0.7rem 1rem;
+        background: linear-gradient(45deg, #e62429, #b91d1d);
+        color: #fff;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 1rem rgba(230,36,41,0.7);
+        transition: transform 0.2s;
+      }
+      #cardPack:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+      }
+      /* Centra il contenitore del pulsante */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+      }
+
+      
+
+
+/* Contenitore del form con sfumatura rosso→nero e ombra */
+.marvel-form {
+  background: linear-gradient(135deg, #ed1d24 0%, #000000 100%);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Input bianco con bordo rosso Marvel */
+.marvel-input {
+  background: #ffffff;
+  border: 2px solid #ed1d24;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Bottone con font Anton, testo uppercase, bordo e ombra nere */
+.marvel-button {
+  font-family: 'Anton', sans-serif;
+  background: #ed1d24;
+  color: #ffffff;
+  border: 2px solid #000000;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px #000000;
+  transition: transform 0.1s;
+}
+
+/* Effetti al passaggio e al click */
+.marvel-button:hover {
+  transform: translateY(-2px);
+}
+.marvel-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px #000000;
+}
+
+
+.marvel-button {
+  font-family: 'Anton', sans-serif;
+  background: #ed1d24;
+  color: #ffffff;
+  border: 3px solid #000000;           /* bordo più spesso */
+  text-transform: uppercase;
+  font-size: 1.25rem;                  /* testo più grande */
+  padding: 0.75rem 1.5rem;             /* spaziatura maggiore */
+  box-shadow:
+    0 6px #000000,                     /* ombra più profonda */
+    0 0 10px rgba(255,255,255,0.8);    /* glow bianco */
+  transition: transform 0.1s, box-shadow 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+/* Glow pulsante in loop */
+@keyframes marvelGlow {
+  0%   { box-shadow: 0 6px #000000, 0 0 8px rgba(255,255,255,0.6); }
+  50%  { box-shadow: 0 6px #000000, 0 0 20px rgba(255,255,255,0.9); }
+  100% { box-shadow: 0 6px #000000, 0 0 8px rgba(255,255,255,0.6); }
+}
+
+.marvel-button {
+  animation: marvelGlow 2s infinite ease-in-out;
+}
+
+.marvel-button:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.marvel-button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px #000000, 0 0 6px rgba(255,255,255,0.5);
+}

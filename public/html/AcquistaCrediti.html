@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Acquista Crediti</title>
+    <link rel="icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../css/comprocrediti.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Librerie Esterne -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="menu"></nav>
+
+    <main class="container">
+        <!-- Titolo -->
+        <h1>Acquista Crediti</h1>
+
+        <!-- Info crediti -->
+        <section class="info">
+            <p>Compra i crediti per ottenere i pacchetti di figurine!</p>
+            <p>Hai <span class="current-credits"></span> crediti</p>
+        </section>
+
+        <!-- Opzioni acquisto -->
+        <section class="options">
+            <button data-credits="10">€2,50<hr>10 crediti</button>
+            <button data-credits="25">€6<hr>25 crediti</button>
+            <button data-credits="55">€12<hr>55 crediti</button>
+            <button data-credits="120">€25<hr>120 crediti</button>
+            <button data-credits="280">€50<hr>280 crediti</button>
+            <button data-credits="600">€100<hr>600 crediti</button>
+        </section>
+
+        <!-- Pulsante acquisto -->
+        <button id="buy" disabled>Acquista ora</button>
+    </main>
+
+
+
+    <!-- Script personalizzato -->
+    <script>
+        // Riferimenti principali
+        const btnBuy        = document.getElementById('buy'),
+              creditDisplay = document.querySelector('.current-credits'),
+              optionsArea   = document.querySelector('.options');
+        let selectedCredits = 0;
+
+        // Selezione dell'opzione crediti (delegation)
+        optionsArea.addEventListener('click', e => {
+            if (e.target.tagName !== 'BUTTON') return;
+            // Rimuovi evidenziazione da tutte e aggiungi solo al clickato
+            optionsArea.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+            e.target.classList.add('selected');
+            selectedCredits = +e.target.dataset.credits;
+            btnBuy.disabled = false;
+        });
+
+        // Acquisto effettivo
+        btnBuy.addEventListener('click', () => {
+            if (!selectedCredits) return;
+            fetch('/edit-credits', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'username':     localStorage.getItem('username'),
+                    'credits':      selectedCredits
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Avviso e aggiornamento dello schermo
+                alert(`Acquisto completato! Ora hai ${data.credits} crediti.`);
+                creditDisplay.textContent = data.credits;
+                localStorage.setItem('credits', data.credits);
+            })
+            .catch(err => console.error('Errore fetch:', err));
+        });
+
+        // Inizializza il display dei crediti al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            creditDisplay.textContent = localStorage.getItem('credits') || 0;
+        });
+    </script>
+</body>
+</html>

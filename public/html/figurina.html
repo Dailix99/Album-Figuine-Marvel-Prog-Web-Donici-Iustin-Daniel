@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>Dettaglio Carte</title>
+    <!-- Stile per le card dei personaggi -->
+    <link rel="stylesheet" href="/css/figurina.css">
+    <!-- Font personalizzato per titoli -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+
+  <div id="menu"></div>
+
+    <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg bg-body-transparent">
+    <div class="container-fluid" id="NavigationBar">
+      <a class="navbar-brand" href="/">
+        <img src="../images/logo.png" alt="Logo" class="nav-logo">
+      </a>
+    
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    <!-- Area di ricerca del supereroe -->
+    <section class="search-container">
+      <h1 class="register-title">Inserisci il nome del Super Eroe</h1>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="select_superhero"
+          placeholder="Nome Super Eroe"
+          autocomplete="off"
+          required
+        >
+        <label for="select_superhero">Cerca Super Eroe Preferito</label>
+      </div>
+      <input type="hidden" id="selected_Superhero">
+    </section>
+
+    <!-- Contenitore per le card dei personaggi -->
+    <section id="CardContainer" class="row justify-content-center"></section>
+
+    <!-- Dettagli del personaggio selezionato -->
+    <section id="character_details" class="row mt-4"></section>
+
+    <div class="spacer"></div>
+  </main>
+
+  <!-- Script di base e librerie -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!-- Script funzionali -->
+  <script src="../scripts/marvel.js"></script>
+  <script src="../scripts/navbar.js"></script>
+  <script src="../scripts/registrazione.js"></script>
+  <script src="../scripts/login.js"></script>
+  <script>
+    // Carica i dettagli del personaggio 
+    caricaPersonaggio();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Album</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../images/logo.png" type="image/x-icon">
+  <!-- Stili -->
+  <link rel="stylesheet" href="../css/pacchetto.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUa6zA0l1hFQjJHGWzMk5lgjRaNf3X5hGILlEw5YIBkIxB6n0EBhE3X9JJNy"
+        crossorigin="anonymous">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Album</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../images/logo.png" type="image/x-icon">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUa6zA0l1hFQjJHGWzMk5lgjRaNf3X5hGILlEw5YIBkIxB6n0EBhE3X9JJNy"
+        crossorigin="anonymous">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+ 
+</head>
+<body>
+  <!-- Navbar dinamica -->
+  <div id="menu"></div>
+
+  <main class="container my-4">
+    <section id="album_selector">
+      <header class="row mb-4">
+        <div class="col-12">
+          <h1><br>Album Figurine</h1>
+          <p>Seleziona l’album da visualizzare...</p>
+          <p>Oppure creane uno nuovo</p>
+        </div>
+      </header>
+
+      <div class="row">
+        <div class="col-md-4">
+          <!-- Pulsanti album esistenti -->
+          <div id="album_selector_container" class="button-container mb-3"></div>
+          <!-- Form nuovo album -->
+          <div id="new_album_container"></div>
+          <!-- Errore caricamento album -->
+          <div id="lock" class="text-center d-none">
+            <p id="error_Message" class="text-danger"></p>
+            <i class="fas fa-lock fa-2x"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12">
+          <!-- Figurine album selezionato -->
+          <div id="pacchetto_figurine" class="pacchetto_figurine"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Librerie esterne (defer) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous" defer></script>
+  <!-- Script applicativi (defer) -->
+  <script src="../scripts/marvel.js" defer></script>
+  <script src="../scripts/login.js" defer></script>
+  <script src="../scripts/navbar.js"></script>
+  
+
+  <script>
+    // Inizializza selettore album al caricamento DOM
+    document.addEventListener('DOMContentLoaded', inizializzaSelettoreAlbum);
+
+    // Carica pulsanti album e form di creazione
+    async function inizializzaSelettoreAlbum() {
+      const userId = localStorage.getItem('_id');
+      const contenitoreBottoni = document.getElementById('album_selector_container');
+      const contenitoreForm     = document.getElementById('new_album_container');
+
+      contenitoreBottoni.innerHTML = '';
+      contenitoreForm.innerHTML    = '';
+
+      try {
+        const albums = await recuperaAlbum(userId);
+        generaBottoniAlbum(albums, contenitoreBottoni);
+      } catch (error) {
+        console.error('Errore caricamento album:', error);
+        mostraErrore('Errore durante il caricamento. Riprova più tardi.');
+      } finally {
+        generaFormNuovoAlbum(contenitoreForm, userId);
+        const savedAlbumId = localStorage.getItem('album_ID');
+        if (savedAlbumId) selezionaAlbum(savedAlbumId);
+      }
+    }
+
+    // Recupera album via API
+    async function recuperaAlbum(userId) {
+      const response = await fetch(`/albums/${userId}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      return Array.isArray(data) ? data : [data];
+    }
+
+      // Crea pulsanti per ogni album
+      function generaBottoniAlbum(albums, contenitore) {
+        albums.filter(Boolean).forEach(({ _id, name }) => {
+          const btn = document.createElement('button');
+          btn.id          = `album-${_id}`;
+          btn.type        = 'button';
+          // default blu
+          btn.className   = 'btn btn-primary m-2 btn-album';
+          btn.textContent = name;
+          btn.addEventListener('click', () => selezionaAlbum(_id));
+          contenitore.appendChild(btn);
+        });
+      }
+
+
+
+    // Crea form per nuovo album in stile Marvel
+    function generaFormNuovoAlbum(contenitore, userId) {
+      const form = document.createElement('form');
+      form.id = 'marvel-new-album-form';
+      form.className = 'd-flex align-items-center marvel-form mt-3';
+      form.innerHTML = `
+        <input
+          id="new_album_name"
+          class="form-control me-2 marvel-input"
+          placeholder="Nome nuovo album"
+          required
+        >
+        <button class="btn marvel-button" type="submit">Crea album</button>
+      `;
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const nome = form.querySelector('#new_album_name').value.trim();
+        if (nome) {
+          await createAlbum(userId, nome);
+          form.querySelector('#new_album_name').value = '';
+          inizializzaSelettoreAlbum();
+        }
+      });
+      contenitore.appendChild(form);
+    }
+
+    // Seleziona un album, evidenzia il pulsante e mostra le figurine
+function selezionaAlbum(albumId) {
+  if (!albumId) return;
+  // riporta tutti in blu
+  document.querySelectorAll('.btn-album').forEach(btn =>
+    btn.classList.replace('btn-danger', 'btn-primary')
+  );
+  localStorage.setItem('album_ID', albumId);
+  // quello selezionato diventa rosso
+  document.getElementById(`album-${albumId}`)
+          ?.classList.replace('btn-primary', 'btn-danger');
+  stampaFigurineAlbum(albumId);
+}
+    // Mostra messaggio di errore
+    function mostraErrore(messaggio) {
+      const lockEl = document.getElementById('lock');
+      const msgEl  = document.getElementById('error_Message');
+      msgEl.textContent = messaggio;
+      lockEl.classList.remove('d-none');
+    }
+  </script>
+</body>
+</html>

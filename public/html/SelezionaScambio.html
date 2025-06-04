@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta e Responsive -->
+    <meta charset="UTF-8">
+    
+    <!-- Icona del sito -->
+    <link rel="icon" href="../images/logo.png" type="image/png">
+    <title>Scambia Carte</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-HO9Aq6cBvI8RgU7yjZNZ0UU8ZNE5c7gXp8+4Tgr+0M3jqCM8ZE+eeuK7y31ecqoy" crossorigin="anonymous">
+
+    <!-- Stile personalizzato -->
+    <link rel="stylesheet" href="../css/selezionascambio.css">
+   
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="menu"></div>
+
+    <div class="container py-4">
+        <h1 class="page-title text-center mb-4"><br>Scambia Carte</h1>
+
+        <div class="intro text-light mb-4">
+            <p>Qui trovi gli scambi disponibili: prendi una carta che ti manca e dai un duplicato.</p>
+            <p>Puoi anche vendere duplicati per <strong>0.2</strong> crediti per carta.</p>
+        </div>
+
+        <div class="button-group mb-5">
+            <a href="/vendita_figurine" class="btn btn-light me-2"><i class="fas fa-dollar-sign"></i> Vendi duplicati</a>
+            <a href="/creo_scambio" class="btn btn-light"><i class="fas fa-plus"></i> Nuovo Scambio</a>
+        </div>
+
+        <div id="lockOverlay"></div>
+        <div id="overlay2"></div>
+
+        <div id="report_container" class="report-section">
+
+            <div class="exchange-card card">
+              <div class="card-header bg-primary text-white">Scambi Disponibili</div>
+              <div class="card-body">
+                <div id="pacchetto_figurine"></div>
+              </div>
+            </div>
+
+            <div class="exchange-card card">
+              <div class="card-header bg-secondary text-white">I Tuoi Scambi</div>
+              <div class="card-body">
+                <div id="my_exchanges"></div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script esterni -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../scripts/marvel.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/login.js"></script>
+    <script src="../scripts/registrazione.js"></script>
+    <script type="module" src="../scripts/footer.js"></script>
+
+    <!-- Script inline per scambi -->
+    <script type="module">
+        async function recuperaNomeEroe(heroId) {
+            try {
+                const res = await fetch(`/character/${heroId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    return data.data[0].name;
+                }
+                return heroId;
+            } catch (e) {
+                console.error('Errore fetching hero:', e);
+                return heroId;
+            }
+        }
+
+        async function gestisciBlocco() {
+            const lock = document.getElementById('lockOverlay');
+            const report = document.getElementById('report_container');
+            const credits = await AcquistaCrediti();
+            if (!localStorage.getItem('album_ID') || credits < 1) {
+                lock.classList.add('active');
+                document.getElementById('error_Message').textContent =
+                    !localStorage.getItem('album_ID')
+                        ? 'Seleziona prima un album'
+                        : 'Crediti insufficienti';
+                report.style.display = 'none';
+            } else {
+                lock.classList.remove('active');
+                report.style.display = 'block';
+            }
+        }
+
+        async function caricaScambiDisponibili() {
+            const userId = localStorage.getItem('_id');
+            const albumId = localStorage.getItem('album_ID');
+            try {
+                const res = await fetch('/check_exchanges', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({userid:userId, albumid:albumId})
+                });
+                if (!res.ok) throw new Error('Errore autenticazione');
+                const data = await res.json();
+                if (data.exchanges?.length) {
+                    const tbl = document.createElement('table');
+                    tbl.className = 'table table-striped text-light';
+                    tbl.innerHTML = `
+                        <thead><tr>
+                            <th>Carta offerta</th><th>Carta richiesta</th><th>Azione</th>
+                        </tr></thead><tbody></tbody>`;
+                    for (const ex of data.exchanges) {
+                        const reqName = await recuperaNomeEroe(ex.requestedCard);
+                        const propNames = await Promise.all(ex.proposedCards.map(id => recuperaNomeEroe(id)));
+                        tbl.querySelector('tbody').insertAdjacentHTML('beforeend', `
+                            <tr>
+                                <td>${reqName}</td>
+                                <td>${propNames.join(', ')}</td>
+                                <td><button class="btn-accept btn" onclick="accettaScambio('${ex.exchange_ID}')">Accetta</button></td>
+                            </tr>`);
+                    }
+                    document.getElementById('pacchetto_figurine').appendChild(tbl);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function caricaMieiScambi() {
+            const userId = localStorage.getItem('_id');
+            const albumId = localStorage.getItem('album_ID');
+            try {
+                const res = await fetch('/check_my_exchanges', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({userid:userId, albumid:albumId})
+                });
+                if (!res.ok) throw new Error('Errore autenticazione');
+                const data = await res.json();
+                if (data.exchanges?.length) {
+                    const tbl = document.createElement('table');
+                    tbl.className = 'table table-striped text-light';
+                    tbl.innerHTML = `
+                        <thead><tr>
+                            <th>Carta ricevuta</th><th>Carta offerta</th><th>Azione</th>
+                        </tr></thead><tbody></tbody>`;
+                    for (const ex of data.exchanges) {
+                        const reqName = await recuperaNomeEroe(ex.requestedCard);
+                        const propNames = await Promise.all(ex.proposedCards.map(id => recuperaNomeEroe(id)));
+                        tbl.querySelector('tbody').insertAdjacentHTML('beforeend', `
+                            <tr>
+                                <td>${reqName}</td>
+                                <td>${propNames.join(', ')}</td>
+                                <td><button class="btn-delete btn" onclick="eliminaScambio('${ex.exchange_ID}')">Elimina</button></td>
+                            </tr>`);
+                    }
+                    document.getElementById('my_exchanges').appendChild(tbl);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            stampaCrediti();
+            gestisciBlocco();
+            caricaScambiDisponibili();
+            caricaMieiScambi();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Login - Superhero Style</title>
+    <!-- Includo CSS di Bootstrap per il layout e componenti predefiniti -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Includo il font “Bangers” per lo stile fumettistico del testo -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <!-- Includo Font Awesome per le icone (es. fulmine) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS personalizzato per la pagina di login -->
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+<!-- Modale di Login: viene mostrata al caricamento della pagina -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><!-- Contenitore della finestra modale -->
+        <div class="modal-content"><!-- Contenuto principale della modale -->
+            <!-- Icona decorativa a forma di fulmine -->
+            <i class="fas fa-bolt hero-icon"></i>
+            <div class="modal-header"><!-- Intestazione con titolo e pulsante di chiusura -->
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"><!-- Corpo della modale con form di accesso -->
+                <div class="container">
+                    <div class="mb-3"><!-- Campo per username o email -->
+                        <label for="usernameOrEmail" class="form-label">Email</label>
+                        <input id="usernameOrEmail" type="email" class="form-control" placeholder="es. emailutente@dominio.it">
+                    </div>
+                    <div class="mb-3"><!-- Campo per la password -->
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" type="password" class="form-control" placeholder="Inserisci la tua password">
+                    </div>
+                    <!-- Link alla pagina di registrazione per nuovi utenti -->
+                    <p class="mt-3">Non hai un account? <a href="/registrati" style="color: #ffd700; text-decoration: underline;">Registrati</a></p>
+                </div>
+                <!-- Contenitore per eventuali messaggi di errore o successo -->
+                <div class="resultContainer"></div>
+            </div>
+            <div class="modal-footer"><!-- Footer della modale con pulsanti di azione -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <!-- Richiama la funzione JavaScript di login -->
+                <button type="submit" class="btn btn-primary" onclick="login()">Accedi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script JS di Bootstrap per il funzionamento delle modali, compare sopra alla pagina principale di registrazione -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+   // Controlla se l'utente è già loggato: in tal caso reindirizza alla home
+   if (checkUserLogged()) {
+        window.location.href = "/";
+   }
+</script>
+
+</body>
+</html>
